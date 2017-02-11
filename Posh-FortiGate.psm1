@@ -51,10 +51,19 @@ function Get-FortiGateSSHResponse
 
         if ($StripHeaderAt)
         {
-            $StartIndex = $Result.IndexOf("`n$StripHeaderAt") + 1;
+            $StartIndex = $Result.IndexOf(" # $StripHeaderAt") + 3;
         }
 
-        return $Result.Substring($StartIndex).Trim();
+        $Result = $Result.Substring($StartIndex).Trim();
+        
+        $EndIndex = $Result.LastIndexOf("`n") + 1;
+		
+        if ($EndIndex -gt 0)
+        {
+            $Result = $Result.Substring(0, $EndIndex).Trim();
+        }
+
+      	return $Result.Replace("`n--More-- `r         `r", "`n");
     }
     else
     {
@@ -87,7 +96,7 @@ function Get-FortiGateConfig
         $Command = 'show full-configuration';
     }
 
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command $Command -StripHeaderAt $null);
+    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command $Command -StripHeaderAt '#config-');
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
@@ -127,8 +136,8 @@ function Get-FortiGateSystemStatus
 		[Parameter(Mandatory=$false)]
 		[Switch]$AcceptKey
     )
-    
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system status' -StripHeaderAt $null);
+
+    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system status' -StripHeaderAt 'Version: ');
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
@@ -147,7 +156,7 @@ function Get-FortiGateSystemPerformanceStatus
 		[Switch]$AcceptKey
     )
 
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system performance status' -StripHeaderAt $null);
+    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system performance status' -StripHeaderAt 'CPU ');
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
@@ -166,7 +175,7 @@ function Get-FortiGateSystemHAStatus
 		[Switch]$AcceptKey
     )
 
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system ha status' -StripHeaderAt $null);
+    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system ha status' -StripHeaderAt 'HA ');
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
@@ -185,5 +194,5 @@ function Get-FortiGateSystemSessionList
 		[Switch]$AcceptKey
     )
 
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system session list' -StripHeaderAt $null);
+    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system session list' -StripHeaderAt 'PROTO ');
 }

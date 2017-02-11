@@ -28,8 +28,8 @@ PS> Install-Module -Name Posh-FortiGate
 
 ## Functionality
 
-* Backup-FortiGateConfig: Gets the running configuration and writes it to a file.
-* Get-FortiGateConfig: Gets the running configuration.
+* Backup-FortiGateConfig: Gets the configuration and writes it to a file.
+* Get-FortiGateConfig: Gets the configuration.
 * Get-FortiGateSystemStatus: Gets the system status.
 * Get-FortiGateSystemPerformanceStatus: Gets the system performance status.
 * Get-FortiGateSystemHAStatus: Gets the system HA (High-Availability) status.
@@ -39,10 +39,10 @@ PS> Install-Module -Name Posh-FortiGate
 
 ### Backup Configuration
 
-This PowerShell command gets the running configuration and writes it to a file.
+This PowerShell command gets the configuration and writes it to a file.
 
 ```PowerShell
-PS> Backup-FortiGateConfig -HostAddress "192.168.0.1" -HostPort 22 -Credential (Get-Credential) -FilePath "$([Environment]::GetFolderPath(“MyDocuments”))\running-config.txt"
+PS> Backup-FortiGateConfig -HostAddress "192.168.1.99" -HostPort 22 -Credential (Get-Credential) -FilePath "$([Environment]::GetFolderPath(“MyDocuments”))\config.txt"
 ```
 
 Advanced Options:
@@ -52,10 +52,10 @@ Advanced Options:
 
 ### Show Configuration
 
-This PowerShell command gets the running configuration.
+This PowerShell command gets the configuration.
 
 ```PowerShell
-PS> Get-FortiGateConfig -HostAddress "192.168.0.1" -HostPort 22 -Credential (Get-Credential)
+PS> Get-FortiGateConfig -HostAddress "192.168.1.99" -HostPort 22 -Credential (Get-Credential)
 ```
 
 Advanced Options:
@@ -68,7 +68,7 @@ Advanced Options:
 This PowerShell command gets the system status.
 
 ```PowerShell
-PS> Get-FortiGateSystemStatus -HostAddress "192.168.0.1" -HostPort 22 -Credential (Get-Credential)
+PS> Get-FortiGateSystemStatus -HostAddress "192.168.1.99" -HostPort 22 -Credential (Get-Credential)
 ```
 
 Advanced Options:
@@ -80,7 +80,7 @@ Advanced Options:
 This PowerShell command gets the system performance status.
 
 ```PowerShell
-PS> Get-FortiGateSystemPerformanceStatus -HostAddress "192.168.0.1" -HostPort 22 -Credential (Get-Credential)
+PS> Get-FortiGateSystemPerformanceStatus -HostAddress "192.168.1.99" -HostPort 22 -Credential (Get-Credential)
 ```
 
 Advanced Options:
@@ -92,7 +92,7 @@ Advanced Options:
 This PowerShell command gets the system HA (High-Availability) status.
 
 ```PowerShell
-PS> Get-FortiGateSystemHAStatus -HostAddress "192.168.0.1" -HostPort 22 -Credential (Get-Credential)
+PS> Get-FortiGateSystemHAStatus -HostAddress "192.168.1.99" -HostPort 22 -Credential (Get-Credential)
 ```
 
 Advanced Options:
@@ -104,7 +104,7 @@ Advanced Options:
 This PowerShell command gets the system session list.
 
 ```PowerShell
-PS> Get-FortiGateSystemSessionList -HostAddress "192.168.0.1" -HostPort 22 -Credential (Get-Credential)
+PS> Get-FortiGateSystemSessionList -HostAddress "192.168.1.99" -HostPort 22 -Credential (Get-Credential)
 ```
 
 Advanced Options:
@@ -115,8 +115,7 @@ Advanced Options:
 
 These PowerShell functions were tested on the following FortiGate devices:
 
-* FortiGate 100D (SW version: )
-* FortiGate 1000D (SW version: )
+* FortiGate 100D (SW version: 5.4.1)
 
 ## Change Log
 

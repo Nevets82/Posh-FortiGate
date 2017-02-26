@@ -4,9 +4,11 @@ This PowerShell module provides some functionality to facilitate automating back
 
 ## Similar Projects
 
-Here are some similar projects I wrote:
+Here are some similar projects I am working on:
 
 * [Posh-Cisco (PowerShell Cisco Module)](https://www.powershellgallery.com/packages/Posh-Cisco "Posh-Cisco PowerShell Cisco Module")
+* [Posh-Juniper (PowerShell Juniper Module)](https://www.powershellgallery.com/packages/Posh-Juniper "Posh-Juniper PowerShell Juniper Module")
+* [Posh-Ubnt (PowerShell Ubnt Module)](https://www.powershellgallery.com/packages/Posh-Ubnt "Posh-Ubnt PowerShell Ubnt Module")
 
 ## Dependencies
 
@@ -50,7 +52,7 @@ Advanced Options:
 * Specify the ```-AcceptKey``` flag to automatically accept SSH key.
 * Specify the ```-Full``` flag to retrieve full configuration with default values.
 
-### Show Configuration
+### Get Configuration
 
 This PowerShell command gets the configuration.
 
@@ -63,7 +65,7 @@ Advanced Options:
 * Specify the ```-AcceptKey``` flag to automatically accept SSH key.
 * Specify the ```-Full``` flag to retrieve full configuration with default values.
 
-### Show System Status
+### Get System Status
 
 This PowerShell command gets the system status.
 
@@ -75,7 +77,7 @@ Advanced Options:
 
 * Specify the ```-AcceptKey``` flag to automatically accept SSH key.
 
-### Show System Performance Status
+### Get System Performance Status
 
 This PowerShell command gets the system performance status.
 
@@ -87,7 +89,7 @@ Advanced Options:
 
 * Specify the ```-AcceptKey``` flag to automatically accept SSH key.
 
-### Show System High-Availability Status
+### Get System High-Availability Status
 
 This PowerShell command gets the system HA (High-Availability) status.
 
@@ -99,7 +101,7 @@ Advanced Options:
 
 * Specify the ```-AcceptKey``` flag to automatically accept SSH key.
 
-### Show System Session List
+### Get System Session List
 
 This PowerShell command gets the system session list.
 
@@ -111,13 +113,62 @@ Advanced Options:
 
 * Specify the ```-AcceptKey``` flag to automatically accept SSH key.
 
+## Security Considerations
+
+Before you create scripts that use this module, you should create a ```readonly_admin``` profile and ```readonly_User``` user to be used for the PSCredentials.
+
+```
+config system accprofile
+    edit "readonly_admin"
+        set mntgrp read
+        set admingrp read
+        set updategrp read
+        set authgrp read
+        set sysgrp read
+        set netgrp read
+        set loggrp read
+        set routegrp read
+        set fwgrp read
+        set vpngrp read
+        set utmgrp read
+        set wanoptgrp read
+        set endpoint-control-grp read
+        set wifi read
+    next
+end
+```
+
+```
+config system admin
+	edit "readonly_user"
+        set trusthost1 192.168.1.1 255.255.255.255
+        set accprofile "readonly_admin"
+        set comments "User for PowerShell backup and troubleshooting tasks"
+        set vdom "root"
+        set password enterastrongpasswordhere
+    next
+end
+```
+
 ## Compatibility
 
 These PowerShell functions were tested on the following FortiGate devices:
 
 * FortiGate 100D (SW version: 5.4.1)
+* FortiGate 1000D (SW version: 5.4.1)
 
 ## Change Log
+
+### Version 1.0.1
+
+### New Features
+
+* Added security considerations section to documentation
+
+#### Bug Fixes
+
+* Fixed issue with prompt being $ instead of #
+* Fixed issue with backup file being UTF-16 instead of ASCII
 
 ### Version 1.0.0
 

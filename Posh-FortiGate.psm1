@@ -51,16 +51,30 @@ function Get-FortiGateSSHResponse
 
         if ($StripHeaderAt)
         {
-            $StartIndex = $Result.IndexOf(" # $StripHeaderAt") + 3;
+            $StartIndex = $Result.IndexOf(" # $StripHeaderAt");
+
+            if ($StartIndex -lt 0)
+            {
+                $StartIndex = $Result.IndexOf(" $ $StripHeaderAt");
+            }
+
+            if ($StartIndex -lt 0)
+            {
+                $StartIndex = 0;
+            }
+            else 
+            {
+                $StartIndex += 3;
+            }
         }
 
         $Result = $Result.Substring($StartIndex).Trim();
         
-        $EndIndex = $Result.LastIndexOf("`n") + 1;
+        $EndIndex = $Result.LastIndexOf("`n");
 		
         if ($EndIndex -gt 0)
         {
-            $Result = $Result.Substring(0, $EndIndex).Trim();
+            $Result = $Result.Substring(0, $EndIndex + 1).Trim();
         }
 
       	return $Result.Replace("`n--More-- `r         `r", "`n");
@@ -118,7 +132,7 @@ function Backup-FortiGateConfig
 		[String]$FilePath
     )
 
-    Get-FortiGateConfig -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -Full:$Full -AcceptKey:$AcceptKey | Out-File -FilePath $FilePath;
+    Get-FortiGateConfig -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -Full:$Full -AcceptKey:$AcceptKey | Out-File -FilePath $FilePath -Encoding ascii;
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml

@@ -161,7 +161,7 @@ These PowerShell functions were tested on the following FortiGate devices:
 
 ### Version 1.0.1
 
-### New Features
+#### New Features
 
 * Added security considerations section to documentation
 

@@ -18,195 +18,251 @@
 Import-Module Posh-SSH;
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
-function Get-FortiGateSSHResponse
-{
-    [OutputType([String])]
-    param
-    (
-		[Parameter(Mandatory=$true)]
-		[String]$HostAddress,
-		[Parameter(Mandatory=$false)]
-		[Int]$HostPort = 22,
-		[Parameter(Mandatory=$true)]
-		[PSCredential]$Credential,
-		[Parameter(Mandatory=$false)]
-		[Switch]$AcceptKey,
-		[Parameter(Mandatory=$true)]
-		[String]$Command,
-		[Parameter(Mandatory=$false)]
-		[String]$StripHeaderAt = $null
-    )
+function Get-FortiGateSSHResponse {
+  [OutputType([String])]
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey,
+    [Parameter(Mandatory = $true)]
+    [String]$Command,
+    [Parameter(Mandatory = $false)]
+    [String]$StripHeaderAt = $null,
+    [Parameter(Mandatory = $false)]
+    [Switch]$EnforceStandardOutput
+  )
+  Begin {
+    if ($EnforceStandardOutput -eq $true) { 
+      $InitialMode = Get-FortiGateCLIOutputMode -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey;
+      if ($InitialMode -like 'more') {
+        Set-FortiGateCLIOutputMode -HostAddress $HostAddress -HostPort $HostPort -OutputMode standard -Credential $Credential -AcceptKey:$AcceptKey | Out-Null;
+      }
+    }
 
     $SSHSession = New-SSHSession -ComputerName $HostAddress -Port $HostPort -Credential $Credential -AcceptKey:$AcceptKey;
-        
-    if ($SSHSession.Connected)
-    {
-        $SSHResponse = Invoke-SSHCommand -SSHSession $SSHSession -Command $Command;
+  }
+
+  Process {
+    if ($SSHSession.Connected) {
+      $SSHResponse = Invoke-SSHCommand -SSHSession $SSHSession -Command $Command;
     
-        Remove-SSHSession -SSHSession $SSHSession | Out-Null;
+      Remove-SSHSession -SSHSession $SSHSession | Out-Null;
 
-        $Result = $SSHResponse.Output | Out-String;
+      $Result = $SSHResponse.Output | Out-String;
 
-        $StartIndex = 0;
+      $StartIndex = 0;
 
-        if ($StripHeaderAt)
-        {
-            $StartIndex = $Result.IndexOf(" # $StripHeaderAt");
+      if ($StripHeaderAt) {
+        $StartIndex = $Result.IndexOf(" # $StripHeaderAt");
 
-            if ($StartIndex -lt 0)
-            {
-                $StartIndex = $Result.IndexOf(" $ $StripHeaderAt");
-            }
-
-            if ($StartIndex -lt 0)
-            {
-                $StartIndex = 0;
-            }
-            else 
-            {
-                $StartIndex += 3;
-            }
+        if ($StartIndex -lt 0) {
+          $StartIndex = $Result.IndexOf(" $ $StripHeaderAt");
         }
 
-        $Result = $Result.Substring($StartIndex).Trim();
+        if ($StartIndex -lt 0) {
+          $StartIndex = 0;
+        }
+        else {
+          $StartIndex += 3;
+        }
+      }
+
+      $Result = $Result.Substring($StartIndex).Trim();
         
-        $EndIndex = $Result.LastIndexOf("`n");
+      $EndIndex = $Result.LastIndexOf("`n");
 		
-        if ($EndIndex -gt 0)
-        {
-            $Result = $Result.Substring(0, $EndIndex + 1).Trim();
-        }
+      if ($EndIndex -gt 0) {
+        $Result = $Result.Substring(0, $EndIndex + 1).Trim();
+      }
 
-      	return $Result.Replace("`n--More-- `r         `r", "`n");
+      return $Result.Replace("`n--More-- `r         `r", "`n");
     }
-    else
-    {
-        throw [System.InvalidOperationException]"Could not connect to SSH host: $($HostAddress):$HostPort.";
+    else {
+      throw [System.InvalidOperationException]"Could not connect to SSH host: $($HostAddress):$HostPort.";
     }
-}
+  }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
-function Get-FortiGateConfig
-{
-    [OutputType([String])]
-    param
-    (
-		[Parameter(Mandatory=$true)]
-		[String]$HostAddress,
-		[Parameter(Mandatory=$false)]
-		[Int]$HostPort = 22,
-		[Parameter(Mandatory=$true)]
-		[PSCredential]$Credential,
-		[Parameter(Mandatory=$false)]
-		[Switch]$Full,
-		[Parameter(Mandatory=$false)]
-		[Switch]$AcceptKey
-    )
-
-    $Command = 'show';
-
-    if ($Full)
-    {
-        $Command = 'show full-configuration';
+  End {
+    #Switch Mode Back to More if needed
+    if ($EnforceStandardOutput -eq $true -and $InitialMode -like 'more') {
+      Set-FortiGateCLIOutputMode -HostAddress $HostAddress -HostPort $HostPort -OutputMode more -Credential $Credential -AcceptKey:$AcceptKey | Out-Null;
     }
-
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command $Command -StripHeaderAt '#config-');
+  }
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
-function Backup-FortiGateConfig
-{
-    param
-    (
-		[Parameter(Mandatory=$true)]
-		[String]$HostAddress,
-		[Parameter(Mandatory=$false)]
-		[Int]$HostPort = 22,
-		[Parameter(Mandatory=$true)]
-		[PSCredential]$Credential,
-		[Parameter(Mandatory=$false)]
-		[Switch]$Full,
-		[Parameter(Mandatory=$false)]
-		[Switch]$AcceptKey,
-		[Parameter(Mandatory=$true)]
-		[String]$FilePath
-    )
+function Get-FortiGateConfig {
+  [OutputType([String])]
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$Full,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey,
+    [Parameter(Mandatory = $false)]
+    [Switch]$EnforceStandardOutput
+  )
 
-    Get-FortiGateConfig -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -Full:$Full -AcceptKey:$AcceptKey | Out-File -FilePath $FilePath -Encoding ascii;
+  $Command = 'show';
+
+  if ($Full) {
+    $Command = 'show full-configuration';
+  }
+
+  return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command $Command -StripHeaderAt '#config-' -EnforceStandardOutput:$EnforceStandardOutput);
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
-function Get-FortiGateSystemStatus
-{
-    [OutputType([String])]
-    param
-    (
-		[Parameter(Mandatory=$true)]
-		[String]$HostAddress,
-		[Parameter(Mandatory=$false)]
-		[Int]$HostPort = 22,
-		[Parameter(Mandatory=$true)]
-		[PSCredential]$Credential,
-		[Parameter(Mandatory=$false)]
-		[Switch]$AcceptKey
-    )
+function Backup-FortiGateConfig {
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$Full,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey,
+    [Parameter(Mandatory = $true)]
+    [String]$FilePath,
+    [Parameter(Mandatory = $false)]
+    [Switch]$EnforceStandardOutput
+  )
 
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system status' -StripHeaderAt 'Version: ');
+  Get-FortiGateConfig -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -Full:$Full -AcceptKey:$AcceptKey -EnforceStandardOutput:$EnforceStandardOutput | Out-File -FilePath $FilePath -Encoding ascii;
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
-function Get-FortiGateSystemPerformanceStatus
-{
-    [OutputType([String])]
-    param
-    (
-		[Parameter(Mandatory=$true)]
-		[String]$HostAddress,
-		[Parameter(Mandatory=$false)]
-		[Int]$HostPort = 22,
-		[Parameter(Mandatory=$true)]
-		[PSCredential]$Credential,
-		[Parameter(Mandatory=$false)]
-		[Switch]$AcceptKey
-    )
+function Get-FortiGateSystemStatus {
+  [OutputType([String])]
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey
+  )
 
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system performance status' -StripHeaderAt 'CPU ');
+  return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system status' -StripHeaderAt 'Version: ');
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
-function Get-FortiGateSystemHAStatus
-{
-    [OutputType([String])]
-    param
-    (
-		[Parameter(Mandatory=$true)]
-		[String]$HostAddress,
-		[Parameter(Mandatory=$false)]
-		[Int]$HostPort = 22,
-		[Parameter(Mandatory=$true)]
-		[PSCredential]$Credential,
-		[Parameter(Mandatory=$false)]
-		[Switch]$AcceptKey
-    )
+function Get-FortiGateSystemPerformanceStatus {
+  [OutputType([String])]
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey
+  )
 
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system ha status' -StripHeaderAt 'HA ');
+  return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system performance status' -StripHeaderAt 'CPU ');
 }
 
 # .ExternalHelp Posh-FortiGate.psm1-Help.xml
-function Get-FortiGateSystemSessionList
-{
-    [OutputType([String])]
-    param
-    (
-		[Parameter(Mandatory=$true)]
-		[String]$HostAddress,
-		[Parameter(Mandatory=$false)]
-		[Int]$HostPort = 22,
-		[Parameter(Mandatory=$true)]
-		[PSCredential]$Credential,
-		[Parameter(Mandatory=$false)]
-		[Switch]$AcceptKey
-    )
+function Get-FortiGateSystemHAStatus {
+  [OutputType([String])]
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey
+  )
 
-    return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system session list' -StripHeaderAt 'PROTO ');
+  return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system ha status' -StripHeaderAt 'HA ');
+}
+
+# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+function Get-FortiGateSystemSessionList {
+  [OutputType([String])]
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey
+  )
+
+  return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system session list' -StripHeaderAt 'PROTO ');
+}
+
+# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+function Set-FortiGateCLIOutputMode {
+  [OutputType([String])]
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [ValidateSet('more', 'standard')]
+    [string]$OutputMode,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey
+  )
+
+  if ($OutputMode -eq 'more') {
+    Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command "config system console `n set output more `n end" | Out-Null;
+  }
+  elseif ($OutputMode -eq 'standard') {
+    Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command "config system console `n set output standard `n end" | Out-Null;
+  }
+  Write-Verbose ("Set FortiOS CLI Output mode to $($OutputMode)");
+  return $OutputMode;
+}
+
+# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+function Get-FortiGateCLIOutputMode {
+  [OutputType([String])]
+  param
+  (
+    [Parameter(Mandatory = $true)]
+    [String]$HostAddress,
+    [Parameter(Mandatory = $false)]
+    [Int]$HostPort = 22,
+    [Parameter(Mandatory = $true)]
+    [PSCredential]$Credential,
+    [Parameter(Mandatory = $false)]
+    [Switch]$AcceptKey
+  )
+
+  $consoleSettings = Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system console' -StripHeaderAt 'mode';
+  return ($consoleSettings | Select-String -Pattern "output\s*:\s(\S*)" | ForEach-Object { $_.matches.groups[1].Value }[0]);
 }

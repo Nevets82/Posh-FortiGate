@@ -72,6 +72,14 @@
 					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 					<dev:defaultValue/>
 				</command:parameter>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+					<maml:name>EnforceStandardOutput</maml:name>
+					<maml:description>
+						<maml:para>Dynamically Changes the CLI Output Mode to Standard and back to More.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
@@ -148,6 +156,18 @@
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>EnforceStandardOutput</maml:name>
+				<maml:description>
+					<maml:para>Dynamically Changes the CLI Output Mode to Standard and back to More.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>SwitchParameter</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:examples>
 			<!-- Examples-->
@@ -179,6 +199,17 @@
 					<maml:para>PS C:\&gt;</maml:para>
 				</maml:introduction>
 				<dev:code>Backup-FortiGateConfig -HostAddress &quot;192.168.1.99&quot; -HostPort 22 -Credential (Get-Credential) -AcceptKey -FilePath &quot;$([Environment]::GetFolderPath(“MyDocuments”))\config.txt&quot;</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Backup-FortiGateConfig -HostAddress &quot;192.168.1.99&quot; -HostPort 22 -Credential (Get-Credential) -AcceptKey -EnforceStandardOutput -FilePath &quot;$([Environment]::GetFolderPath(“MyDocuments”))\config.txt&quot;</dev:code>
 				<dev:remarks>
 					<maml:para>
 					</maml:para>
@@ -240,6 +271,14 @@
 					<maml:name>AcceptKey</maml:name>
 					<maml:description>
 						<maml:para>Automatically accept SSH key.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+					<maml:name>EnforceStandardOutput</maml:name>
+					<maml:description>
+						<maml:para>Dynamically Changes the CLI Output Mode to Standard and back to More.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 					<dev:defaultValue/>
@@ -308,6 +347,18 @@
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>EnforceStandardOutput</maml:name>
+				<maml:description>
+					<maml:para>Dynamically Changes the CLI Output Mode to Standard and back to More.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>SwitchParameter</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:returnValues>
 			<!-- Outputs-->
@@ -350,6 +401,17 @@
 					<maml:para>PS C:\&gt;</maml:para>
 				</maml:introduction>
 				<dev:code>Get-FortiGateConfig -HostAddress &quot;192.168.1.99&quot; -HostPort 22 -Credential (Get-Credential) -AcceptKey</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-FortiGateConfig -HostAddress &quot;192.168.1.99&quot; -HostPort 22 -Credential (Get-Credential) -EnforceStandardOutput</dev:code>
 				<dev:remarks>
 					<maml:para>
 					</maml:para>
@@ -985,6 +1047,14 @@
 					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 					<dev:defaultValue/>
 				</command:parameter>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+					<maml:name>EnforceStandardOutput</maml:name>
+					<maml:description>
+						<maml:para>Dynamically Changes the CLI Output Mode to Standard and back to More.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
@@ -1061,6 +1131,18 @@
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>EnforceStandardOutput</maml:name>
+				<maml:description>
+					<maml:para>Dynamically Changes the CLI Output Mode to Standard and back to More.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>SwitchParameter</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:returnValues>
 			<!-- Outputs-->
@@ -1074,6 +1156,307 @@
 				</maml:description>
 			</command:returnValue>
 		</command:returnValues>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-FortiGateCLIOutputMode</command:name>
+			<maml:description>
+				<maml:para>Gets the FortiGate CLI Output mode.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>FortiGateCLIOutputMode</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Gets the FortiGate CLI Output mode..</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-FortiGateCLIOutputMode</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+					<maml:name>HostAddress</maml:name>
+					<maml:description>
+						<maml:para>The SSH host address of the FortiGate device.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+					<maml:name>HostPort</maml:name>
+					<maml:description>
+						<maml:para>The SSH host port of the FortiGate device.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
+					<maml:name>Credential</maml:name>
+					<maml:description>
+						<maml:para>The SSH credentials to use.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+					<maml:name>AcceptKey</maml:name>
+					<maml:description>
+						<maml:para>Automatically accept SSH key.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>HostAddress</maml:name>
+				<maml:description>
+					<maml:para>The SSH host address of the FortiGate device.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>HostPort</maml:name>
+				<maml:description>
+					<maml:para>The SSH host port of the FortiGate device.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+				<dev:type>
+					<maml:name>Int32</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue>22</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
+				<maml:name>Credential</maml:name>
+				<maml:description>
+					<maml:para>The SSH credentials to use.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+				<dev:type>
+					<maml:name>PSCredential</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>AcceptKey</maml:name>
+				<maml:description>
+					<maml:para>Automatically accept SSH key.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>SwitchParameter</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-FortiGateCLIOutputMode -HostAddress &quot;192.168.1.99&quot; -Credential (Get-Credential)</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-FortiGateCLIOutputMode -HostAddress &quot;192.168.1.99&quot; -HostPort 22 -Credential (Get-Credential) -AcceptKey</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-FortiGateCLIOutputMode</command:name>
+			<maml:description>
+				<maml:para>Sets the FortiGate CLI Output mode.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>FortiGateCLIOutputMode</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Sets the FortiGate CLI Output mode..</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Set-FortiGateCLIOutputMode</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+					<maml:name>HostAddress</maml:name>
+					<maml:description>
+						<maml:para>The SSH host address of the FortiGate device.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+					<maml:name>HostPort</maml:name>
+					<maml:description>
+						<maml:para>The SSH host port of the FortiGate device.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
+					<maml:name>Credential</maml:name>
+					<maml:description>
+						<maml:para>The SSH credentials to use.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="3">
+					<maml:name>OutputMode</maml:name>
+					<maml:description>
+						<maml:para>The CLI Output mode of the FortiGate device (more/standard).</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+					<maml:name>AcceptKey</maml:name>
+					<maml:description>
+						<maml:para>Automatically accept SSH key.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>HostAddress</maml:name>
+				<maml:description>
+					<maml:para>The SSH host address of the FortiGate device.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>HostPort</maml:name>
+				<maml:description>
+					<maml:para>The SSH host port of the FortiGate device.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+				<dev:type>
+					<maml:name>Int32</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue>22</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
+				<maml:name>Credential</maml:name>
+				<maml:description>
+					<maml:para>The SSH credentials to use.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+				<dev:type>
+					<maml:name>PSCredential</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="3">
+				<maml:name>OutputMode</maml:name>
+				<maml:description>
+					<maml:para>The CLI Output mode of the FortiGate device (more/standard).</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>AcceptKey</maml:name>
+				<maml:description>
+					<maml:para>Automatically accept SSH key.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>SwitchParameter</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Set-FortiGateCLIOutputMode -HostAddress &quot;192.168.1.99&quot; -Credential (Get-Credential) -OutputMode more</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Set-FortiGateCLIOutputMode -HostAddress &quot;192.168.1.99&quot; -HostPort 22 -Credential (Get-Credential) -OutputMode standard -AcceptKey</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<!-- Generated by: SAPIEN PowerShell HelpWriter 2016 v1.1.20-->
 </helpItems>

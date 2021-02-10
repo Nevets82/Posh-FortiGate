@@ -18,16 +18,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: 1. Print Environment Setup
-        shell: pwsh
-        run: | 
-          Write-Host "******Computer Infos*******"
-          Get-ComputerInfo | Select -Property WindowsBuildLabEx, WIndowsProductName, WindowsVersion, CsModel, CsNumberOfLogicalProcessors,CsNumerOfProcessors,OsTotalVisibleMemorySize, CsDNSHostName
-          Write-Host "***************************"
-
-      # 2. Create Release
-      - name: 2. Create Release
+      # 1. Create Release
+      - name: 1. Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -39,8 +31,8 @@ jobs:
           draft: false
           prerelease: false
 
-      # 3. Push 2 PSGallery
-      - name: 3. Publish Module to PowerShell Gallery
+      # 2. Push 2 PSGallery
+      - name: 2. Publish Module to PowerShell Gallery
         uses: pcgeek86/publish-powershell-module-action@v19
         id: publish-module
         with:

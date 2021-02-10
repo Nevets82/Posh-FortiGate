@@ -41,4 +41,4 @@ jobs:
       - name: 3. Publish Module to PowerShell Gallery (shell mode)
         shell: pwsh
         run: |
-          Publish-Module -Name Posh-FortiGate6 -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }}
+          Publish-Module -Path "./Posh-FortiGate6" -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }}

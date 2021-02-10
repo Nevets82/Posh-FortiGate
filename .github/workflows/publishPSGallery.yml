@@ -1,0 +1,48 @@
+name: publish2PSGallery
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+   # branches: [ master ] #do not apply this filter for now
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+  # Allows to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: 1. Print Environment Setup
+        shell: pwsh
+        run: | 
+          Write-Host "******Computer Infos*******"
+          Get-ComputerInfo | Select -Property WindowsBuildLabEx, WIndowsProductName, WindowsVersion, CsModel, CsNumberOfLogicalProcessors,CsNumerOfProcessors,OsTotalVisibleMemorySize, CsDNSHostName
+          Write-Host "***************************"
+
+      # 2. Create Release
+      - name: 2. Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          bodyfile: changelog.md
+          draft: false
+          prerelease: false
+
+      # 3. Push 2 PSGallery
+      - name: 3. Publish Module to PowerShell Gallery
+        uses: pcgeek86/publish-powershell-module-action@v19
+        id: publish-module
+        with:
+          modulePath: Posh-FortiGate6
+          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}

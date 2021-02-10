@@ -4,6 +4,9 @@ This PowerShell module provides some functionality to facilitate automating back
 
 This module works up to FortiOs 6.4.x 
 
+This Module is available in PowerShell Gallery!
+https://www.powershellgallery.com/packages/Posh-FortiGate6
+
 ## Credits
 
 This module is based on the original Posh-Fortigate Module from [@Nevets82](https://github.com/Nevets82) - ([Posh-Fortigate](https://github.com/Nevets82/Posh-FortiGate)), which only worked with FortiGates up to Firmware v6.0.x and is no longer updated.

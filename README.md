@@ -1,14 +1,21 @@
-# Posh-FortiGate PowerShell FortiGate Module
+# Posh-FortiGate6 PowerShell FortiGate Module
+
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/posh-fortigate6)](https://www.powershellgallery.com/packages/Posh-FortiGate6)
+
 
 This PowerShell module provides some functionality to facilitate automating backup actions of a FortiGate device over SSH. This module also provides some basic functionality for troubleshooting FortiGate devices.
 
-## Similar Projects
+This module works up to FortiOs 6.4.x 
 
-Here are some similar projects I am working on:
+This Module is available in PowerShell Gallery!
+https://www.powershellgallery.com/packages/Posh-FortiGate6
 
-- [Posh-Cisco (PowerShell Cisco Module)](https://www.powershellgallery.com/packages/Posh-Cisco 'Posh-Cisco PowerShell Cisco Module')
-- [Posh-Juniper (PowerShell Juniper Module)](https://www.powershellgallery.com/packages/Posh-Juniper 'Posh-Juniper PowerShell Juniper Module')
-- [Posh-Ubnt (PowerShell Ubnt Module)](https://www.powershellgallery.com/packages/Posh-Ubnt 'Posh-Ubnt PowerShell Ubnt Module')
+## Credits
+
+This module is based on the original Posh-Fortigate Module from [@Nevets82](https://github.com/Nevets82) - ([Posh-Fortigate](https://github.com/Nevets82/Posh-FortiGate)), which only worked with FortiGates up to Firmware v6.0.x and is no longer updated.
+
+This module will be update frequently for further Firmware Versions like 6.4 and 7.0, although it is not clear at the moment, how much the CLI of FortiOS 7.x has changed and if it makes more sense to completely rewrite the module by then.
+
 
 ## Dependencies
 
@@ -19,13 +26,19 @@ This module depends on the following PowerShell modules:
 ## Inspect
 
 ```PowerShell
-PS> Save-Module -Name Posh-FortiGate -Path <path>
+PS> Save-Module -Name Posh-FortiGate6 -Path <path>
 ```
 
 ## Install
 
 ```PowerShell
-PS> Install-Module -Name Posh-FortiGate
+PS> Install-Module -Name Posh-FortiGate6
+```
+
+## Import
+
+```PowerShell
+PS> Import-Module -Name Posh-FortiGate6
 ```
 
 ## Functionality

@@ -1,4 +1,5 @@
-# Posh-FortiGate PowerShell FortiGate Module
+# Posh-FortiGate6 PowerShell FortiGate Module
+# Copyright (c) 2021 David Schafer, All rights reserved.
 # Copyright (c) 2017 Steven Lietaer, All rights reserved.
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -17,7 +18,7 @@
 # Import PowerShell SSH Module
 Import-Module Posh-SSH;
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Get-FortiGateSSHResponse {
   [OutputType([String])]
   param
@@ -96,7 +97,7 @@ function Get-FortiGateSSHResponse {
   }
 }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Get-FortiGateConfig {
   [OutputType([String])]
   param
@@ -124,7 +125,7 @@ function Get-FortiGateConfig {
   return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command $Command -StripHeaderAt '#config-' -EnforceStandardOutput:$EnforceStandardOutput);
 }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Backup-FortiGateConfig {
   param
   (
@@ -147,7 +148,7 @@ function Backup-FortiGateConfig {
   Get-FortiGateConfig -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -Full:$Full -AcceptKey:$AcceptKey -EnforceStandardOutput:$EnforceStandardOutput | Out-File -FilePath $FilePath -Encoding ascii;
 }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Get-FortiGateSystemStatus {
   [OutputType([String])]
   param
@@ -165,7 +166,7 @@ function Get-FortiGateSystemStatus {
   return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system status' -StripHeaderAt 'Version: ');
 }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Get-FortiGateSystemPerformanceStatus {
   [OutputType([String])]
   param
@@ -183,7 +184,7 @@ function Get-FortiGateSystemPerformanceStatus {
   return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system performance status' -StripHeaderAt 'CPU ');
 }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Get-FortiGateSystemHAStatus {
   [OutputType([String])]
   param
@@ -201,7 +202,7 @@ function Get-FortiGateSystemHAStatus {
   return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system ha status' -StripHeaderAt 'HA ');
 }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Get-FortiGateSystemSessionList {
   [OutputType([String])]
   param
@@ -219,7 +220,7 @@ function Get-FortiGateSystemSessionList {
   return (Get-FortiGateSSHResponse -HostAddress $HostAddress -HostPort $HostPort -Credential $Credential -AcceptKey:$AcceptKey -Command 'get system session list' -StripHeaderAt 'PROTO ');
 }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Set-FortiGateCLIOutputMode {
   [OutputType([String])]
   param
@@ -248,7 +249,7 @@ function Set-FortiGateCLIOutputMode {
   return $OutputMode;
 }
 
-# .ExternalHelp Posh-FortiGate.psm1-Help.xml
+# .ExternalHelp Posh-FortiGate6.psm1-Help.xml
 function Get-FortiGateCLIOutputMode {
   [OutputType([String])]
   param

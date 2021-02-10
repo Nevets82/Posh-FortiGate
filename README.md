@@ -2,7 +2,6 @@
 
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/posh-fortigate6)](https://www.powershellgallery.com/packages/Posh-FortiGate6)
 
-
 This PowerShell module provides some functionality to facilitate automating backup actions of a FortiGate device over SSH. This module also provides some basic functionality for troubleshooting FortiGate devices.
 
 This module works up to FortiOs 6.4.x 

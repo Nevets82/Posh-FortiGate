@@ -31,27 +31,11 @@ jobs:
           draft: false
           prerelease: false
 
-      # Needed because of super restrictive nature of the Publish-Module Function
-      # https://github.com/PowerShell/PowerShell/issues/7722
       - name: 2. Install required Module Dependencies from PSGallery
         shell: pwsh
         run: |
-              # Get .psd1 data
-              $data = Import-PowerShellDataFile .\*.psd1
-
-              # Get the RequiredModules
-              $requiredModules = $data.RequiredModules.ModuleName
-              
-              if ($requiredModules) {
-                  # Create credentials used to connect to private NuGet feed
-                  Write-Output 'Creating credentials'
-                  $pwd = ConvertTo-SecureString $NuGetApiKey -AsPlainText -Force
-                  $cred = New-Object Management.Automation.PSCredential ("username", $pwd)
-                  # Install the required modules
-                  foreach ($module in $requiredModules) {
-                      Install-Module $module -Repository $repo -Credential $cred -Verbose
-                  }
-              }
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module Posh-SSH
 
       # 3. Push 2 PSGallery
       - name: 3. Publish Module to PowerShell Gallery

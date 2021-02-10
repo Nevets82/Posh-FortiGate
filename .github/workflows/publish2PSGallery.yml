@@ -27,12 +27,18 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          bodyfile: changelog.md
+          body_path: changelog.md
           draft: false
           prerelease: false
 
-      # 2. Push 2 PSGallery
-      - name: 2. Publish Module to PowerShell Gallery
+      - name: 2. Install required Module Dependencies from PSGallery
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module Posh-SSH
+
+      # 3. Push 2 PSGallery
+      - name: 3. Publish Module to PowerShell Gallery
         uses: pcgeek86/publish-powershell-module-action@v19
         id: publish-module
         with:

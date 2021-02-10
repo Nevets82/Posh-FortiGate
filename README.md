@@ -216,7 +216,11 @@ These PowerShell functions were tested on the following FortiGate devices:
 - Fortigate 60F (SW version: 6.2.3)
 - Fortigate 100E (SW version: 6.2.3)
 
-## Change Log
+## Changelog (v6)
+
+▶ [changelog.md](changelog.md)
+
+## [legacy] Change Log
 
 ### Version 1.0.2
 
